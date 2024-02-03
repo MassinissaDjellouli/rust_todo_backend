@@ -7,7 +7,8 @@ pub struct DBConn {
     pool: sqlx::Pool<Postgres>,
 }
 impl DBConn {
-    pub async fn GetInstance() -> &'static sqlx::Pool<Postgres> {
+    #[async_recursion::async_recursion]
+    pub async fn get_instance() -> &'static sqlx::Pool<Postgres> {
         unsafe{
             return match INSTANCE {
                 Some(ref mut instance) => {
@@ -24,7 +25,7 @@ impl DBConn {
                     INSTANCE = Some(DBConn {
                         pool
                     });
-                    &INSTANCE.expect("There should be an instance").pool
+                    Self::get_instance().await
                 }
             }
         }

@@ -14,4 +14,5 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 dotenv = "0.15.0"
 sqlx = { version = "0.7", features = [ "runtime-tokio", "postgres", "uuid", "tls-native-tls" ] }
-uuid = "1.7.0"
+uuid = { version = "1.7.0", features = ["serde"] }
+async-recursion = "1.0.5"
